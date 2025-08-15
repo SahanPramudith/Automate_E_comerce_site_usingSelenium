@@ -1,9 +1,6 @@
 package pagess;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -74,6 +71,9 @@ public class NavBar {
         driver.switchTo().alert().accept();
     }
     public void goAboutPage(){
+        WebDriverWait webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        webDriverWait.until(ExpectedConditions.visibilityOf(About));
+
         About.click();
         String title = driver.getTitle();
         if(title.contains("data:,")){
@@ -87,13 +87,52 @@ public class NavBar {
         Cart.click();
 
     }
-    public void goSingPage(){
-        Signup.click();
+        @FindBy(xpath = "//input[@id='sign-username']")
+        WebElement signUserName;
+        @FindBy(xpath = "//input[@id='sign-password']")
+        WebElement signPassword;
+        @FindBy(xpath = "//button[normalize-space()='Sign up']")
+        WebElement SignUpButton;
+        public void goSingPage() throws InterruptedException {
+            WebDriverWait webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(5));
+            Signup.click();
 
-    }
-    public void goLoginPage(){
-        Login.click();
-    }
+            webDriverWait.until(ExpectedConditions.visibilityOf(signUserName));
+            signUserName.sendKeys("sahan"+Keys.TAB);
+            webDriverWait.until(ExpectedConditions.visibilityOf(signPassword));
+            signPassword.sendKeys("123456"+Keys.TAB);
+            SignUpButton.click();
+            Thread.sleep(3000);
+            Alert signAlert = driver.switchTo().alert();
+            String signAlertText = signAlert.getText();
+            System.out.println("text = " + signAlertText);
+            signAlert.accept();
+            driver.quit();
+        }
+
+        @FindBy(xpath = "//input[@id='loginusername']")
+        WebElement loginUserName;
+        @FindBy(xpath = "//input[@id='loginpassword']")
+        WebElement loginPassword;
+        @FindBy(xpath = "//button[normalize-space()='Log in']")
+        WebElement loginButton;
+        public void goLoginPage(){
+//
+            WebDriverWait webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(5));
+            Login.click();
+           // webDriverWait.until(ExpectedConditions.visibilityOf(Login));
+
+
+            webDriverWait.until(ExpectedConditions.visibilityOf(loginUserName));
+            loginUserName.sendKeys("sahan"+Keys.TAB);
+            webDriverWait.until(ExpectedConditions.visibilityOf(loginPassword));
+            loginPassword.sendKeys("123456"+Keys.TAB);
+            webDriverWait.until(ExpectedConditions.visibilityOf(loginButton));
+            loginButton.click();
+
+
+
+        }
 
 
 

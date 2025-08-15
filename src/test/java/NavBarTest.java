@@ -9,9 +9,9 @@ public class NavBarTest extends BaseTest {
         NavBar navBar = new NavBar(driver);
         navBar.goHomePage();
         navBar.goContactPage();
-//        navBar.goAboutPage();
+ //       navBar.goAboutPage();
 //        navBar.goCartPage();
-//        navBar.goLoginPage();
-//        navBar.goSingPage();
+        navBar.goSingPage();
+       //navBar.goLoginPage();
     }
 }
